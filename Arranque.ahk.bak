@@ -1,0 +1,35 @@
+#SingleInstance, force
+#Persistent
+
+inicio := "true"
+cont := 0
+;Sleep, 180000
+
+if (inicio = "true")
+{
+   Process, Exist, Receiver.exe
+   {
+      If errorLevel
+      {
+      Process, Close, Receiver.exe
+      Sleep, 200
+      Process, Close, SelfService.exe
+      ++cont
+      }
+   }
+   Process, Exist, vpnui.exe
+   {
+      If errorLevel
+     {
+      Process, Close, vpnui.exe
+      ++cont
+      }
+   }
+   If (cont <> 0) 
+   {
+   inicio := "false"
+   }
+} 
+ExitApp
+
+return
